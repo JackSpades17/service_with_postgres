@@ -6,29 +6,35 @@ from flask import Flask
 
 con = psycopg2.connect (
     database = "postgres",
-    user = "",
-    password = "",
-    host = "89.169.142.196",
+    user = "test_user",
+    password = "1111",
+    host = "51.250.91.140",
     port = "5432"
 )
+
+cur = con.cursor()
+app = Flask(__name__)
 
 @app.route('/get')
 def get_price():
     
-    cur.execute('''select * from check_market_price order by id desc;''')
+    cur.execute('''select * from count_update order by count desc;''')
     sets = cur.fetchone()
     print(sets)
-    return f'<h1>{sets[1]} стоит {sets[2]}</h1>'
+    return f'<h1>BIG is {sets[0]}</h1>'
 
 @app.route('/update')
 def update_price():
-    product = 'cat/123/p/ajco-kurinoe-roskar-ekstra-so-10st-44323'
-    r = requests.get(f'https://www.perekrestok.ru/{product}')
-    soup = BeautifulSoup(r.text,'html.parser')
-    a = soup.find('div', class_='price-card-unit-value')
-    new_price = a.get_text().split()[0]
-    cur.execute(f'''insert into check_market_price(product, price) values('syr', '{new_price}');''')
-    con.commit()
-    cur.execute('''select * from check_market_price order by id desc;''')
+    cur.execute('''select * from count_update order by count desc;''')
     sets = cur.fetchone()
-    return f'<h1>Обновлено! Теперь {sets[1]} стоит {sets[2]}!</h1>'
+    new_item = int(sets[0]) + 1
+    cur.execute(f'''insert into count_update values('{new_item}');''')
+    con.commit()
+    cur.execute('''select * from count_update order by count desc;''')
+    sets = cur.fetchone()
+    return f'<h1>Обновлено! BIG is {sets[0]}!</h1>'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=1717)
+
+con.close()

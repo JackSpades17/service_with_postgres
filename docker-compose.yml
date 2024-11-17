@@ -1,0 +1,12 @@
+version: "2.2"
+services:
+  test_service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: "${CONTAINER_NAME}"
+    ports:
+    - 8080:1717
+    volumes:
+    - "${HOME_DIRECTORY}:/opt/app"
