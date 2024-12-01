@@ -8,7 +8,7 @@ con = psycopg2.connect (
     database = "postgres",
     user = "test_user",
     password = "1111",
-    host = "89.169.136.70",
+    host = "89.169.128.198",
     port = "5432"
 )
 
