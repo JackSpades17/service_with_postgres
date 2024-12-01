@@ -32,7 +32,7 @@ def update_price():
     con.commit()
     cur.execute('''select * from count_update order by count desc;''')
     sets = cur.fetchone()
-    return f'<h1>Обновлено! BIG is {sets[0]}!</h1>'
+    return f'<h1>Congratulations!Обновлено! BIG is {sets[0]}!</h1>'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=1717)
