@@ -6,9 +6,9 @@ from flask import Flask
 
 con = psycopg2.connect (
     database = "postgres",
-    user = "USER_PG",
-    password = "PASSWORD_PG",
-    host = "HOST_PG",
+    user = "test_user",
+    password = "1111",
+    host = "89.169.148.241",
     port = "5432"
 )
 
